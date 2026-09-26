@@ -34,7 +34,7 @@ The headers and namespace remain unchanged. You can also link against the `chrom
 
 ## Promises
 
-**Parity Promise:** The main branch passes upstream compatibility testing. Any regression detected by the parity job is fixed before release.
+**Parity Promise:** With every Chroma flag OFF, the 5 core translation units (`imgui.cpp`, `imgui_draw.cpp`, `imgui_tables.cpp`, `imgui_widgets.cpp`, `imgui_demo.cpp`) preprocess identically to upstream at the pinned tag, and `imgui.h`, `imgui_internal.h` and `imconfig.h` keep every upstream line as a subsequence. That is exactly what `scripts/chroma/parity_check.sh` checks; other files (backends, `misc/`, tests) are not covered by it. Any regression the parity job detects is fixed before release.
 
 **Compatibility Promise:** Ecosystem projects build unmodified:
 - imnodes

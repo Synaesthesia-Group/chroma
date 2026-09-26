@@ -2,9 +2,11 @@
 #
 # scripts/chroma/parity_check.sh
 #
-# Proves the "superset, never diverge" rule from ADR-0002: with every Chroma
-# feature flag OFF, this fork must behave exactly like upstream imgui at the
-# pinned tag.
+# Checks the "superset, never diverge" rule from ADR-0002 for the files
+# listed below: with every Chroma feature flag OFF, these files must match
+# upstream imgui at the pinned tag exactly. It does not check every file in
+# the repository, and it does not by itself enforce the additive-paths-only
+# rule from ADR-0002.
 #
 # It checks two things against a temporary worktree of the pinned tag:
 #

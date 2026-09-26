@@ -5,7 +5,7 @@
 - Main branch at upstream tag `v1.92.9b-docking`.
 - CMake target `chroma::imgui` for consistent integration.
 - Parity script to detect upstream compatibility regressions.
-- Parity CI job to verify main passes all upstream tests.
+- Parity CI job that runs `parity_check.sh` and builds the `imgui` CMake target (it runs no upstream tests).
 - Compatibility CI job to verify ecosystem projects build unmodified.
 
 ## Release Notes

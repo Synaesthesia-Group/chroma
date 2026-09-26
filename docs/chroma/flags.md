@@ -1,6 +1,8 @@
 # Chroma Feature Flags
 
-Chroma extends Dear ImGui through optional compile-time flags. All flags default to off, ensuring backward compatibility. Enable a flag by defining it before including `imgui.h`.
+Chroma extends Dear ImGui through optional compile-time flags. All flags default to off, ensuring backward compatibility.
+
+Enable a flag for every translation unit, not just the ones that happen to define it before including `imgui.h`: set it in `imconfig.h` (or via `IMGUI_USER_CONFIG`), or use the matching CMake option (e.g. `CHROMA_ENABLE_<FEATURE>`), which adds the definition as a `PUBLIC` compile definition on the `imgui` target so every consumer gets it. Defining the flag in only one `.cpp` file before including `imgui.h` disagrees with the already-compiled `imgui.cpp` and every other translation unit — an ODR violation that can produce struct-layout mismatches and other undefined behavior.
 
 ## IMGUI_ENABLE_ACCESSIBILITY
 
