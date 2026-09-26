@@ -7,6 +7,7 @@
 - Parity script to detect upstream compatibility regressions.
 - Parity CI job that runs `parity_check.sh` and builds the `imgui` CMake target (it runs no upstream tests).
 - Compatibility CI job to verify ecosystem projects build unmodified.
+- chroma-examples CI job builds the SDL3 GPU, SDL3 Renderer and GLFW OpenGL3 examples on three operating systems; upstream's build workflow is disabled on the fork because its test jobs track imgui_test_engine master.
 
 ## Release Notes
 
