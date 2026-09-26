@@ -7,7 +7,7 @@ This document describes how to synchronize Chroma with upstream Dear ImGui durin
 - The upstream remote is named `upstream`.
 - The `upstream-docking` branch mirrors the upstream docking branch.
 - Each topic branch (feature/accessibility, feature/lcd-text, feature/shaping) is rebased on main.
-- Main branch is always at an upstream tag (e.g., v1.92.9b-docking).
+- Main is an upstream tag (e.g., v1.92.9b-docking) plus Chroma's own added commits.
 
 ## Step-by-Step Sync Procedure
 
@@ -69,7 +69,7 @@ git checkout feature/accessibility
 git rebase main
 ```
 
-If there are conflicts, resolve them and continue the rebase. If a feature cannot rebase in a day, merge it to main before proceeding.
+If there are conflicts, resolve them and continue the rebase. If a feature cannot rebase in a day, remove the topic branch from main until it rebases cleanly, then proceed.
 
 Repeat this for each topic branch: `feature/lcd-text`, `feature/shaping`.
 

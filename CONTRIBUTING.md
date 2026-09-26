@@ -14,11 +14,13 @@ Chroma is a superset fork of Dear ImGui. When contributing, please follow these 
 
 ## Commit Messages
 
-Each commit message must end with the following line:
+This rule applies only to commits produced by an AI coding agent: the commit message must end with a trailer naming the model that produced it, for example:
 
 ```
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 ```
+
+Human contributors do not add this trailer.
 
 Use normal English prose in commit messages. Write clearly and concisely.
 
@@ -37,7 +39,7 @@ Each release cycle:
 5. Run the parity job to detect regressions.
 6. Tag the release as `1.92.9b-chroma.n`.
 
-If a topic branch cannot rebase in a day, it must be merged to main before proceeding.
+If a topic branch cannot rebase in a day, it is removed from main until it rebases cleanly.
 
 ## Scope Restrictions
 
