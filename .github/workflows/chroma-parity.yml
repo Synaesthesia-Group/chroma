@@ -1,0 +1,39 @@
+name: chroma-parity
+
+# Proves the "superset, never diverge" rule from ADR-0002: with every
+# Chroma feature flag OFF, this fork must behave exactly like upstream
+# Dear ImGui at the tag pinned in scripts/chroma/upstream_tag.txt, and the
+# root CMakeLists.txt core library must still configure and build.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  parity:
+    name: Parity check (flags off)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out chroma
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Fetch upstream tags
+        run: git fetch https://github.com/ocornut/imgui.git '+refs/tags/*:refs/tags/*'
+
+      - name: Run parity check
+        run: scripts/chroma/parity_check.sh
+
+      - name: Configure core library (all CHROMA_* options OFF)
+        run: >
+          cmake -S . -B build/chroma-parity
+          -DCHROMA_BACKEND_SDL3=OFF
+          -DCHROMA_BACKEND_SDLGPU3=OFF
+          -DCHROMA_BACKEND_SDLRENDERER3=OFF
+          -DCHROMA_BACKEND_GLFW_OPENGL3=OFF
+          -DCHROMA_FREETYPE=OFF
+          -DCHROMA_STB_TRUETYPE=OFF
+
+      - name: Build core library
+        run: cmake --build build/chroma-parity --target imgui

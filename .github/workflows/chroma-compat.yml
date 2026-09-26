@@ -1,0 +1,36 @@
+name: chroma-compat
+
+# Proves the superset half of ADR-0002's "superset, never diverge" rule:
+# real, independently-maintained Dear ImGui extensions must compile,
+# unmodified, against this fork's core sources, on every platform Dear
+# ImGui itself supports. See .github/chroma/compat/CMakeLists.txt for how
+# each extension is built.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compat:
+    name: Compat build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Check out chroma
+        uses: actions/checkout@v6
+
+      - name: Install CMake and Ninja
+        uses: lukka/get-cmake@v4.4.2
+
+      - name: Set up MSVC dev environment
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure compat project
+        run: cmake -S .github/chroma/compat -B build/chroma-compat -G Ninja
+
+      - name: Build compat project
+        run: cmake --build build/chroma-compat
