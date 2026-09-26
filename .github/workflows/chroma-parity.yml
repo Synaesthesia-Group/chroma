@@ -1,9 +1,13 @@
 name: chroma-parity
 
-# Proves the "superset, never diverge" rule from ADR-0002: with every
-# Chroma feature flag OFF, this fork must behave exactly like upstream
-# Dear ImGui at the tag pinned in scripts/chroma/upstream_tag.txt, and the
-# root CMakeLists.txt core library must still configure and build.
+# Checks the "superset, never diverge" rule from ADR-0002 for what this job
+# actually proves: with every CHROMA_* flag OFF, the five core translation
+# units (imgui.cpp, imgui_draw.cpp, imgui_tables.cpp, imgui_widgets.cpp,
+# imgui_demo.cpp) preprocess to byte-identical output against upstream Dear
+# ImGui at the tag pinned in scripts/chroma/upstream_tag.txt, and the three
+# public headers (imgui.h, imgui_internal.h, imconfig.h) are line supersets
+# of upstream's. The job also configures and builds the root
+# CMakeLists.txt core library with all CHROMA_* options off.
 
 on:
   push:
