@@ -16,7 +16,7 @@ Chroma's roadmap includes three major features:
 
 ## Branch Model
 
-- **main** — Tracks upstream at tag `v1.92.9b-docking`. This branch receives only rebased topic branches, never merge commits.
+- **main** — The upstream tag `v1.92.9b-docking` plus Chroma's own added commits; never the bare tag by itself. This branch receives only rebased topic branches, never merge commits.
 - **upstream-docking** — A mirror of the upstream `docking` branch, updated each release cycle.
 - **Topic branches** — One branch per planned feature (e.g., `feature/accessibility`). Each rebases on main during upstream sync.
 - **Tags** — Release tags follow the pattern `1.92.9b-chroma.n` (e.g., `1.92.9b-chroma.1`).
