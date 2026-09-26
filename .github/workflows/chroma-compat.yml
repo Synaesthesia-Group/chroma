@@ -10,6 +10,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   compat:
     name: Compat build (${{ matrix.os }})
@@ -20,14 +23,14 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Check out chroma
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
       - name: Install CMake and Ninja
-        uses: lukka/get-cmake@v4.4.2
+        uses: lukka/get-cmake@fffaaafeea488556c2c12dad60690008bc1caacb # v4.4.2
 
       - name: Set up MSVC dev environment
         if: runner.os == 'Windows'
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: ilammy/msvc-dev-cmd@7defe9254715b088f12dddd9942945a3d75cdad5 # v1.9.0
 
       - name: Configure compat project
         run: cmake -S .github/chroma/compat -B build/chroma-compat -G Ninja
