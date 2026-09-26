@@ -3,8 +3,9 @@
 # scripts/chroma/parity_check.sh
 #
 # Checks the "superset, never diverge" rule from ADR-0002 for the files
-# listed below: with every Chroma feature flag OFF, these files must match
-# upstream imgui at the pinned tag exactly. It does not check every file in
+# listed below: with every Chroma feature flag OFF, the core translation units
+# preprocess byte-identically to upstream, and the headers keep every upstream
+# line in the same order (a line superset). It does not check every file in
 # the repository, and it does not by itself enforce the additive-paths-only
 # rule from ADR-0002.
 #

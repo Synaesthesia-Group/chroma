@@ -2,7 +2,7 @@
 
 ## 1.92.9b-chroma.1 (unreleased)
 
-- Main branch at upstream tag `v1.92.9b-docking`.
+- Main branch based on upstream tag `v1.92.9b-docking` plus Chroma's added commits.
 - CMake target `chroma::imgui` for consistent integration.
 - Parity script to detect upstream compatibility regressions.
 - Parity CI job that runs `parity_check.sh` and builds the `imgui` CMake target (it runs no upstream tests).
