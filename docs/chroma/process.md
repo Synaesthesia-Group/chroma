@@ -35,13 +35,16 @@ The `upstream-docking` branch is now a mirror of the upstream docking branch.
 
 ### 3. Move main to the New Upstream Tag
 
-Move `main` to the new upstream tag before rebasing anything onto it (topic branches rebase onto "main at the new upstream tag" in the next step, so main must already be there):
+`main` is never the bare upstream tag. It is the upstream tag plus Chroma's own added commits — the additive files under the allowed paths (`CMakeLists.txt`, `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `scripts/chroma/**`, `docs/chroma/**`, the `.github/workflows/chroma-*.yml` files, `.github/chroma/**`). Move `main` to the new tag by rebasing those commits onto it, not by resetting main to the tag. A reset makes main's tree exactly the bare tag, which has none of those files, and deletes them all from main.
+
+Move `main` before rebasing topic branches onto it (topic branches rebase onto "main at the new upstream tag" in the next step, so main must already be there):
 
 ```bash
 git checkout main
-git reset --hard <new-upstream-tag>
-git push origin main
+git rebase --onto <new-upstream-tag> <old-upstream-tag> main
 ```
+
+This replays only the commits after `<old-upstream-tag>` — Chroma's added commits — onto `<new-upstream-tag>`, so the additive files stay in place.
 
 Bump the pin that `scripts/chroma/parity_check.sh` reads, so the parity job checks against the same tag `main` now sits on:
 
@@ -49,7 +52,12 @@ Bump the pin that `scripts/chroma/parity_check.sh` reads, so the parity job chec
 echo "<new-upstream-tag>" > scripts/chroma/upstream_tag.txt
 git add scripts/chroma/upstream_tag.txt
 git commit -m "chroma: bump upstream_tag.txt to <new-upstream-tag>"
-git push origin main
+```
+
+The rebase rewrites `main`'s history, so a plain `git push origin main` is a non-fast-forward and is rejected. Push with `--force-with-lease` instead — it still refuses if someone else has pushed to `origin/main` since your last fetch, so it will not silently overwrite their work:
+
+```bash
+git push origin main --force-with-lease
 ```
 
 ### 4. Rebase Each Topic Branch

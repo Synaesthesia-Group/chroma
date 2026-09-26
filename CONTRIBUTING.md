@@ -32,9 +32,10 @@ Each release cycle:
 
 1. Fetch upstream tags and branches.
 2. Update the `upstream-docking` mirror to match upstream.
-3. Rebase each topic branch onto the new main.
-4. Run the parity job to detect regressions.
-5. Tag the release as `1.92.9b-chroma.n`.
+3. Move `main` to the new upstream tag by rebasing Chroma's added commits onto it (`git rebase --onto <new-upstream-tag> <old-upstream-tag> main`), then bump `scripts/chroma/upstream_tag.txt` to the new tag, commit that change, and push `main` with `--force-with-lease`. Do not `git reset --hard` main onto the tag — that deletes Chroma's added files. See `docs/chroma/process.md` for the full command sequence.
+4. Rebase each topic branch onto the new main.
+5. Run the parity job to detect regressions.
+6. Tag the release as `1.92.9b-chroma.n`.
 
 If a topic branch cannot rebase in a day, it must be merged to main before proceeding.
 
