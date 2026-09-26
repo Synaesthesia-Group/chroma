@@ -2,8 +2,8 @@
 
 `parity_check.sh` checks the "superset, never diverge" rule from ADR-0002
 for the files it covers: with every Chroma feature flag OFF, the 5 core
-translation units and `imgui.h`, `imgui_internal.h` and `imconfig.h` must
-match upstream Dear ImGui at the pinned tag exactly (see "What it checks"
+translation units preprocess byte-identically to upstream, and the 3 headers
+keep every upstream line in the same order (a line superset) (see "What it checks"
 below for the precise file list). It does not check every file in the
 repository, and it does not by itself enforce the additive-paths-only rule
 from ADR-0002.
