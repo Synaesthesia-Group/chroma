@@ -33,7 +33,26 @@ git push origin upstream-docking
 
 The `upstream-docking` branch is now a mirror of the upstream docking branch.
 
-### 3. Rebase Each Topic Branch
+### 3. Move main to the New Upstream Tag
+
+Move `main` to the new upstream tag before rebasing anything onto it (topic branches rebase onto "main at the new upstream tag" in the next step, so main must already be there):
+
+```bash
+git checkout main
+git reset --hard <new-upstream-tag>
+git push origin main
+```
+
+Bump the pin that `scripts/chroma/parity_check.sh` reads, so the parity job checks against the same tag `main` now sits on:
+
+```bash
+echo "<new-upstream-tag>" > scripts/chroma/upstream_tag.txt
+git add scripts/chroma/upstream_tag.txt
+git commit -m "chroma: bump upstream_tag.txt to <new-upstream-tag>"
+git push origin main
+```
+
+### 4. Rebase Each Topic Branch
 
 For each topic branch (e.g., `feature/accessibility`), rebase it onto main at the new upstream tag.
 
@@ -46,17 +65,17 @@ If there are conflicts, resolve them and continue the rebase. If a feature canno
 
 Repeat this for each topic branch: `feature/lcd-text`, `feature/shaping`.
 
-### 4. Run the Parity Job
+### 5. Run the Parity Job
 
-Run the parity script to detect upstream compatibility regressions. The parity job builds Chroma with all flags off and compares behavior against upstream:
+Run the parity script to detect upstream compatibility regressions. With all Chroma flags off, it preprocesses Chroma's core files and compares the resulting text against upstream — it does not run or compare behavior at runtime (the CI job separately configures and builds the `imgui` CMake target too):
 
 ```bash
-./scripts/chroma/parity.sh
+./scripts/chroma/parity_check.sh
 ```
 
 If the parity job fails, a regression was introduced. Fix the issue before proceeding.
 
-### 5. Tag the Release
+### 6. Tag the Release
 
 Once all topic branches rebase successfully and parity passes, tag the release:
 
